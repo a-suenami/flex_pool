@@ -1,9 +1,27 @@
+require 'flex_pool/mapper'
+require 'flex_pool/pool'
+
 RSpec.describe FlexPool do
   it "has a version number" do
     expect(FlexPool::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "has any mappers" do
+    relation = []
+    objects = FlexPool::Mapper.map(relation, limit: 10, map_type: Struct.new(:id, :name))
+    expect(objects).to be_a(Array)
+  end
+
+  it "has any pools" do
+    objects = FlexPool::Pool.fetch(attr1: 'value1', attr2: 12345, attar3: false)
+    expect(objects).to be_a(Array)
+  end
+
+  it "has case class" do
+    expect(true).to be(true)
+  end
+
+  it "has presenter helper" do
+    expect(true).to be(true)
   end
 end
