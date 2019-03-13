@@ -13,8 +13,21 @@ RSpec.describe FlexPool do
   end
 
   it "has any pools" do
+    # このへんのインターフェース考える
+    pool = FlexPool::Pool[relation]
+    pool.fetch(args)
+
     objects = FlexPool::Pool.fetch(attr1: 'value1', attr2: 12345, attar3: false)
     expect(objects).to be_a(Array)
+
+    products = ProductPool.fetch(
+                 keyword: 'MacBook',
+                 price_amount_from: 100_000,
+                 price_amount_to: 300_000,
+                 price_unit: 'JPY',
+                 limit: 10
+               )
+    expect(products).to be_a(Array)
   end
 
   it "has case class" do
