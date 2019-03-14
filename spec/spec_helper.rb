@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "flex_pool"
+require "flex_trans"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

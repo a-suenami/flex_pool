@@ -1,6 +1,6 @@
-require 'flex_pool/struct'
+require 'flex_trans/struct'
 
-module FlexPool
+module FlexTrans
   class Mapper
     class << self
       def mapping_attributes(*mapping_attributes)
@@ -36,7 +36,7 @@ module FlexPool
     end
 
     def current_mapping_type
-      @mapping_type || FlexPool::Struct.new(*current_mapping_attributes)
+      @mapping_type || FlexTrans::Struct.new(*current_mapping_attributes)
     end
 
     def current_mapping_attributes

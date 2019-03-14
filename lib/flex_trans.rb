@@ -1,6 +1,6 @@
-require "flex_pool/version"
+require "flex_trans/version"
 
-module FlexPool
+module FlexTrans
   class Error < StandardError; end
   # Your code goes here...
 end

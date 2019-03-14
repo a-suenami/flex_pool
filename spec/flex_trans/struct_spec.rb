@@ -1,7 +1,7 @@
-require 'flex_pool/struct'
+require 'flex_trans/struct'
 
-RSpec.describe FlexPool::Struct do
-  let(:klass) { FlexPool::Struct.new(:id, :name) }
+RSpec.describe FlexTrans::Struct do
+  let(:klass) { FlexTrans::Struct.new(:id, :name) }
 
   it 'has some attributes and each getters' do
     object = klass.new(id: 1, name: 'Suenami Akira')
@@ -20,7 +20,7 @@ RSpec.describe FlexPool::Struct do
   end
 
   it 'can define any instance methods' do
-    klass = FlexPool::Struct.new(:id, :first_name, :last_name) do
+    klass = FlexTrans::Struct.new(:id, :first_name, :last_name) do
       def full_name
         first_name + ' ' + last_name
       end

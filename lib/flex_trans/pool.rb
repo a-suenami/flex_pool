@@ -1,4 +1,4 @@
-module FlexPool
+module FlexTrans
   class Pool
     # attr_reader :map_type
 

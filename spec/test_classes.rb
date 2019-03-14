@@ -1,11 +1,11 @@
-class Case::Product < FlexPool::CaseClass
+class Case::Product < FlexTrans::CaseClass
 end
 
-class ProductPresenter < FlexPool::CaseClass
-  include FlexPool::Presenter
+class ProductPresenter < FlexTrans::CaseClass
+  include FlexTrans::Presenter
 end
 
-class ProductMapper < FlexPool::Mapper
+class ProductMapper < FlexTrans::Mapper
   relation Product.where
 
   attribute :id
@@ -17,14 +17,14 @@ class ProductMapper < FlexPool::Mapper
   end
 end
 
-pool = FlexPool::Pool.instant_pool do |p|
+pool = FlexTrans::Pool.instant_pool do |p|
   p.attribute = [ :id, :name, :price ]
 end
 pool.fetch
 
-class FlexPool::Pool
+class FlexTrans::Pool
   def self.instant_pool(&block)
-    pool = FlexPool::Pool.new
+    pool = FlexTrans::Pool.new
     # pool.relation = relation
   end
 
@@ -33,7 +33,7 @@ class FlexPool::Pool
   end
 
   def self.[](relation)
-    FlexPool::Pool.new(relation)
+    FlexTrans::Pool.new(relation)
   end
 
   def fetch
@@ -46,14 +46,38 @@ class FlexPool::Pool
 end
 
 rel = Member.where(...)
-pool = FlexPool::Pool[rel].attributes(:id, :name, :birth_date) do
+pool = FlexTrans::Pool[rel].attributes(:id, :name, :birth_date) do
   def age
     (Time.zone.now - birth_date).to_i
   end
 end
 members = pool.fetch(limit: 10)
 
-class ProductPool < FlexPool::Pool[Member]
+class ProductMapper < FlexTrans::Mapper
+  mapping_type Struct.new(:id, :name, :price)
+
+  attribute :id
+  attribute :name
+  attribute :price
+end
+
+class FlexTrans::Mapper
+  def self.map(relation)
+    mapping_type = @@type || Struct.new(attributes)
+    relation.map do |tupple|
+      mapping_type.new(tupple)
+    end
+  end
+
+  def attributes
+    [:id, :name, :price]
+  end
+end
+products = ProductMapper.map(relation)
+
+FlexTrans::Mapper.map(relation)
+
+class ProductPool < FlexTrans::Pool[Member]
   # mapping_class ProductPresenter
   mapping_class Struct.new(:id, :name, :price)
 

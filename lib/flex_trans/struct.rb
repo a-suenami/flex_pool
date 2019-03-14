@@ -1,4 +1,4 @@
-module FlexPool
+module FlexTrans
   module Struct
     def self.new(*args, &block)
       klass = Class.new do
